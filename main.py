@@ -44,6 +44,7 @@ ResourceManagementMenu =   '''
 F.    Finish
 '''
 
+
 # Strings of menu names and options
 MainMenu                = "Main Menu"
 EmployeeManagement      = "Employee Management"
@@ -86,75 +87,79 @@ if   val == "1": # EMPLOYEE MANAGEMENT
         print(OptionSelected + AddEmployee + ",\n")
         UserName    = input("Enter your name: ")
         UserSurname = input("Enter your surname: ")
-        UserIDNumber= int(input("Enter your ID number: "))
-        UserAddress = input("Enter your address: ")
-        UserPhone   = input("Enter your phone number: ")
-        UserPilot   = input("Are you a pilot?(y/n): ")
-        
-        UserPilot = UserPilot.lower() # avoids calculating UserPilot.lower() several times
-        if   UserPilot == "y" or UserPilot == "ye" or UserPilot == "yes":
-            UserPilot = "Yes"
-        elif UserPilot == "n" or UserPilot == "no":
-            UserPilot = "No"
-        else:
-            print("\nInvalid answer to pilot ... assume No")
-            UserPilot = "No"
-        
-        rem = UserIDNumber % 23
-        if   rem == 0:
-            UserIDLetter = "T"
-        elif rem == 1:
-            UserIDLetter = "R"
-        elif rem == 2:
-            UserIDLetter = "W"
-        elif rem == 3:
-            UserIDLetter = "A"
-        elif rem == 4:
-            UserIDLetter = "G"
-        elif rem == 5:
-            UserIDLetter = "M"
-        elif rem == 6:
-            UserIDLetter = "Y"
-        elif rem == 7:
-            UserIDLetter = "F"
-        elif rem == 8:
-            UserIDLetter = "P"
-        elif rem == 9:
-            UserIDLetter = "D"
-        elif rem == 10:
-            UserIDLetter = "X"
-        elif rem == 11:
-            UserIDLetter = "B"
-        elif rem == 12:
-            UserIDLetter = "N"
-        elif rem == 13:
-            UserIDLetter = "J"
-        elif rem == 14:
-            UserIDLetter = "Z"
-        elif rem == 15:
-            UserIDLetter = "S"
-        elif rem == 16:
-            UserIDLetter = "Q"
-        elif rem == 17:
-            UserIDLetter = "V"
-        elif rem == 18:
-            UserIDLetter = "H"
-        elif rem == 19:
-            UserIDLetter = "L"
-        elif rem == 20:
-            UserIDLetter = "C"
-        elif rem == 21:
-            UserIDLetter = "K"
-        elif rem == 22:
-            UserIDLetter = "E"
+        UserIDNumber= input("Enter your ID number: ")
+        if UserIDNumber.isdigit(): # checking if it is a digit prevents a crash
+            UserIDNumber= int(UserIDNumber)
+            UserAddress = input("Enter your address: ")
+            UserPhone   = input("Enter your phone number: ")
+            UserPilot   = input("Are you a pilot?(y/n): ")
+            
+            UserPilot = UserPilot.lower() # avoids calculating UserPilot.lower() several times
+            if   UserPilot == "y" or UserPilot == "ye" or UserPilot == "yes":
+                UserPilot = "Yes"
+            elif UserPilot == "n" or UserPilot == "no":
+                UserPilot = "No"
+            else:
+                print("\nInvalid answer to pilot ... assume No")
+                UserPilot = "No"
+            
+            rem = UserIDNumber % 23
+            if   rem == 0:
+                UserIDLetter = "T"
+            elif rem == 1:
+                UserIDLetter = "R"
+            elif rem == 2:
+                UserIDLetter = "W"
+            elif rem == 3:
+                UserIDLetter = "A"
+            elif rem == 4:
+                UserIDLetter = "G"
+            elif rem == 5:
+                UserIDLetter = "M"
+            elif rem == 6:
+                UserIDLetter = "Y"
+            elif rem == 7:
+                UserIDLetter = "F"
+            elif rem == 8:
+                UserIDLetter = "P"
+            elif rem == 9:
+                UserIDLetter = "D"
+            elif rem == 10:
+                UserIDLetter = "X"
+            elif rem == 11:
+                UserIDLetter = "B"
+            elif rem == 12:
+                UserIDLetter = "N"
+            elif rem == 13:
+                UserIDLetter = "J"
+            elif rem == 14:
+                UserIDLetter = "Z"
+            elif rem == 15:
+                UserIDLetter = "S"
+            elif rem == 16:
+                UserIDLetter = "Q"
+            elif rem == 17:
+                UserIDLetter = "V"
+            elif rem == 18:
+                UserIDLetter = "H"
+            elif rem == 19:
+                UserIDLetter = "L"
+            elif rem == 20:
+                UserIDLetter = "C"
+            elif rem == 21:
+                UserIDLetter = "K"
+            elif rem == 22:
+                UserIDLetter = "E"
 
-        print("\nEmployee registered")
-        print("Name: ",     UserName)
-        print("Surname:",   UserSurname)
-        print("ID: ",       str(UserIDNumber) + UserIDLetter)
-        print("Address: ",  UserAddress)
-        print("Phone: ",    UserPhone)
-        print("Pilot: ",    UserPilot)
+            print("\nEmployee registered")
+            print("Name: ",     UserName)
+            print("Surname:",   UserSurname)
+            print("ID: ",       str(UserIDNumber) + UserIDLetter)
+            print("Address: ",  UserAddress)
+            print("Phone: ",    UserPhone)
+            print("Pilot: ",    UserPilot) 
+        else: 
+            print("Invalid answer to ID number ... exiting")
 
     elif val == "2": # EMPLOYEE LIST 
         print(OptionSelected + EmployeeList + ",")
