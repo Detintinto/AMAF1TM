@@ -1,82 +1,4 @@
-# Strings relating to printing the menu to the user
-MainMenuMenu =   '''
-****************************************************
-*                   Main Menu                      *
-****************************************************
-1.    Employee Management.
-2.    Parts Management.
-3.    Improvements Management.
-4.    Resource Management.
-
-F.    Finish
-'''
-EmployeeManagementMenu =   '''
-****************************************************
-*              Employee Management Menu            *
-****************************************************
-1.    Add Employee.
-2.    Employee List.
-3.    Search Employee by ID.
-B.    Back.
-F.    Finish
-'''
-PartsManagementMenu =   '''
-****************************************************
-*                Parts Management Menu             *
-****************************************************
-1.    Add Parts.
-2.    Parts List.
-3.    Search by Parts Group.
-B.    Back.
-F.    Finish
-'''
-ImprovementsManagementMenu =   '''
-****************************************************
-*             Improvements Management Menu         *
-****************************************************
-1.    Assign Improvement to Development Group.
-2.    Delete Improvement.
-B.    Back
-F.    Finish
-'''
-ResourceManagementMenu =   '''
-****************************************************
-*              Resource Management Menu            *
-****************************************************
-1.    Resources Spent.
-2.    Remaining Budget.
-B.    Back.
-F.    Finish
-'''
-
-
-# Strings of menu names and options
-MainMenu                = "Main Menu"
-EmployeeManagement      = "Employee Management"
-PartsManagement         = "Parts Management"
-ImprovementsManagement  = "Improvements Management"
-ResourceManagement      = "Resource Management"
-
-AddEmployee     = "Add Employee"
-EmployeeList    = "Employee List"
-SearchEmployee  = "Search Employee by ID"
-
-AddParts    = "Add Parts"
-PartsList   = "Parts List"
-SearchParts = "Search by Parts Group"
-
-AssignImprovement   = "Assign Improvement to Development Group"
-DeleteImprovement   = "Delete Improvement"
-
-ResourcesSpent  = "Resources Spent"
-RemainingBudget = "Remaining Budget"
-
-
-# Strings related to printing the option that was selected
-# these can specially be used with the "Strings of menu names and options" defined above to avoid code repetition
-InvalidOption   = "Error: invalid option in menu "
-MenuFinish      = "You have selected to finish from menu "
-OptionSelected  = "You have selected option "
+import random
 
 # This tuple gets the DNI letter, where the index is the corresponding remainder
 DNILetter = ("T","R","W","A","G","M","Y","F","P","D","X","B","N","J","Z","S","Q","V","H","L","C","K","E")
@@ -84,255 +6,348 @@ DNILetter = ("T","R","W","A","G","M","Y","F","P","D","X","B","N","J","Z","S","Q"
 # A dictionary to search for employee data. Each key will be the employee's DNI
 EmployeeData = {}
 
-# Exit condition for all loop. Why can't we use break again? :(
-MainMenuExit = False
-EmployeeManagementExit = False
-PartsManagementExit = False
-ImprovementsManagementExit = False
-ResourceManagementExit = False
+def displayMenuHeader(title, border="*"):
+    borderString = "" # Initialize to empty string. Will store the entire menu text.
+    for i in range(50):
+        borderString += border 
+    borderString += "\n" # moves onto the next line of the header
+    borderString += border
+    
+    sizeAdjust = 0
+    if len(title) % 2 == 1:
+        sizeAdjust = 1
+    
+    for i in range(24 - int((len(title)+sizeAdjust)/2)):
+        borderString += " "
+    borderString += title
+    for i in range(24 - int((len(title)-sizeAdjust)/2)):
+        borderString += " "
+  
+    borderString += border
+    borderString += "\n"
+    for i in range(50):
+        borderString += border
+        
+    print(borderString)
 
-InputPromptExit = False # This one is used when gathering input in add employee
+def mainMenu(borderStyle):
+    exitLoop = False
+    while not exitLoop:
+        exitLoop = True
+        displayMenuHeader("Main Menu", borderStyle)
+        print("1.    Employee Management.\n2.    Parts Management.\n3.    Improvements Management.\n4.    Resource Management.\n\nF.    Finish")
+        val = input("Please, press an option (1-4, or F): ")
+        if val == "1":
+            print("You have selected option Employee Management,\n")
+        elif val == "2":
+            print("You have selected option Parts Management,\n")
+        elif val == "3":
+            print("You have selected option Improvements Management,\n")
+        elif val == "4":
+            print("You have selected option Resource Management,\n")
+        elif val.lower() == "f":
+            print("You have selected to finish from the Main Menu")
+        else:
+            print("Error: invalid option in the Main Menu,")
+            exitLoop = False
+    return val.lower()
+    
+def employeeManagementMenu(borderStyle):
+    exitLoop = False
+    while not exitLoop:
+        exitLoop = True
+        displayMenuHeader("Employee Management Menu", borderStyle)
+        print("1.    Add Employee.\n2.    Employee List.\n3.    Search Employee by ID.\nB.    Back.\nF.    Finish")
+        
+        val = input("Please, press an option (1-3, or B, or F): ")
+        if val == "1":
+            print("You have selected option Add Employee,\n")
+        elif val == "2":
+            print("You have selected option Employee List,\n")
+        elif val == "3":
+            print("You have selected option Search Employee by ID,\n")
+        elif val.lower() == "b":
+            print("Returning to the Main Menu from the Employee Management Menu.\n")
+        elif val.lower() == "f":
+            print("You have selected to finish from the Employee Management Menu.")
+        else:
+            print("Error: invalid option in the Employee Management Menu,")
+            exitLoop = False
+    return val.lower()
 
-while not MainMenuExit:
+def partsManagementMenu(borderStyle):
+    exitLoop = False
+    while not exitLoop:
+        exitLoop = True
+        displayMenuHeader("Parts Management Menu", borderStyle)
+        print("1.    Add Parts.\n2.    Parts List.\n3.    Search by Parts Group.\nB.    Back.\nF.    Finish")
+        
+        val = input("Please, press an option (1-3, or B, or F): ")
+        if val == "1":
+            print("You have selected option Add Parts,\n")
+        elif val == "2":
+            print("You have selected option Parts List,\n")
+        elif val == "3":
+            print("You have selected option Search by Parts Group,\n")
+        elif val.lower() == "b":
+            print("Returning to the Main Menu from the Parts Management Menu.\n")
+        elif val.lower() == "f":
+            print("You have selected to finish from the Parts Management Menu.")
+        else:
+            print("Error: invalid option in the Parts Management Menu,")
+            exitLoop = False
+    return val.lower()
 
-    print(MainMenuMenu)
-    val = input("Please, press an option (1-4, or F): ")
+def improvementsManagementMenu(borderStyle):
+    exitLoop = False
+    while not exitLoop:
+        exitLoop = True
+        displayMenuHeader("Improvements Management Menu", borderStyle)
+        print("1.    Assign Improvement to Development Group.\n2.    Delete Improvement.\nB.    Back\nF.    Finish")
+        
+        val = input("Please, press an option (1-2, or B, or F): ")
+        if val == "1":
+            print("You have selected option Assign Improvement to Development Group,\n")
+        elif val == "2":
+            print("You have selected option Delete Improvement,\n")
+        elif val.lower() == "b":
+            print("Returning to the Main Menu from the Improvements Management Menu.\n")
+        elif val.lower() == "f":
+            print("You have selected to finish from the Improvements Management Menu.")
+        else:
+            print("Error: invalid option in the Improvements Management Menu,")
+            exitLoop = False
+    return val.lower()
+    
+def resourceManagementMenu(borderStyle):
+    exitLoop = False
+    while not exitLoop:
+        exitLoop = True
+        displayMenuHeader("Resource Management Menu", borderStyle)
+        print("1.    Resources Spent.\n2.    Remaining Budget.\nB.    Back.\nF.    Finish")
+        
+        val = input("Please, press an option (1-2, or B, or F): ")
+        if val == "1":
+            print("You have selected option Resources Spent,\n")
+        elif val == "2":
+            print("You have selected option Remaining Budget,\n")
+        elif val.lower() == "b":
+            print("Returning to the Main Menu from the Resource Management Menu.\n")
+        elif val.lower() == "f":
+            print("You have selected to finish from the Resource Management Menu.")
+        else:
+            print("Error: invalid option in the Resource Management Menu,")
+            exitLoop = False
+    return val.lower()
 
-    # enters the main branch to determine which menu to show vvvvv
+def addEmployee():
+    UserName = ""
+    exitLoop = False
+    while not exitLoop:
+        i = 0 # index for the UserName string, also exit condition! 
+        while i == 0:
+            UserName = input("Enter your name: ")
+            if len(UserName) != 0: # We need to check if it contains at least on letter, "" is not really a name is it?
+                i = 1
+            else:
+                print("This field must include at least one letter.\n")
+        UserName = UserName.lower() # This allows us to check just one range, a-z, rather than both A-Z and a-z
 
-    if val == "1": # EMPLOYEE MANAGEMENT
-        print(OptionSelected + EmployeeManagement + ",") # It should only be printed once, so I'll put it here
+        i = 0
+        while i < len(UserName):
+            if UserName[i] > "0" and UserName[i] < "9": # I will be using this a lot. Check out the ascii table
+                i = len(UserName) # Get out of the inner while loop. We avoided more variables ... yay                         
+            i+=1 # Note, if the program only finds a-z, then i = UserName.len(), else i = UserName.len()+1
+        if i == len(UserName): # Only if UserName contains a-z
+            exitLoop = True
+            UserName = UserName[0].upper() + UserName[1:]
+        else:
+            print("This field may only contain letters.\n") 
+    exitLoop = False # Don't forget to reset it afterwards, else it won't work a second time!
 
-        while not EmployeeManagementExit:
+    UserSurname = ""
+    while not exitLoop:
+        i = 0
+        while i == 0:
+            UserSurname = input("Enter your surname: ")
+            if len(UserSurname) != 0:
+                i = 1
+            else:
+                print("This field must include at least one letter.\n")
+        UserSurname = UserSurname.lower() 
 
-            print(EmployeeManagementMenu)
-            val = input("Please, press an option (1-3, or B or F): ")
+        i = 0 
+        while i < len(UserSurname):
+            if UserSurname[i] < "a" or UserSurname[i] > "z": 
+                i = len(UserSurname) 
+            i+=1 
+        if i == len(UserSurname): 
+            exitLoop = True
+            UserSurname = UserSurname[0].upper() + UserSurname[1:]
+        else:
+            print("This field may only contain letters\n") 
+    exitLoop = False 
+    
+    UserID = ""
+    while not exitLoop:
+        UserID = input("Enter your ID number: ")
+        if UserID.isdigit() and len(UserID) == 8:
+            exitLoop = True
+        else:
+            print("This field may only be an 8 digit number.\n")
+    exitLoop = False
+    UserID += DNILetter[int(UserID)%23]
 
-            if   val == "1": # ADD EMPLOYEE
-                print(OptionSelected + AddEmployee + ",\n")
+    UserAddress = ""
+    while not exitLoop:
+        UserAddress = input("Enter your address: ")
+        if len(UserAddress) >= 3:
+            exitLoop = True
+        else:
+            print("This field must have over 3 characters.\n")
+    exitLoop = False
+    
+    UserPhone = ""
+    while not exitLoop:
+        UserPhone = input("Enter your phone number: ")
+        if UserPhone.isdigit() and len(UserPhone) == 9:
+            exitLoop = True
+        else:
+            print("This field may only be a 9 digit number.\n")
+    exitLoop = False
 
-                UserName = ""
-                while not InputPromptExit:
-                    i = 0 # index for the UserName string, also exit condition! 
-                    while i == 0:
-                        UserName = input("Enter your name: ")
-                        if len(UserName) != 0: # We need to check if it contains at least on letter, "" is not really a name is it?
-                            i = 1
-                        else:
-                            print("This field must include at least one letter.\n")
-                    UserName = UserName.lower() # This allows us to check just one range, a-z, rather than both A-Z and a-z
+    UserPilot = ""
+    while not exitLoop:
+        UserPilot = input("Are you a pilot?(y/n): ")
+        UserPilot = UserPilot.lower()
+        if UserPilot == "y" or UserPilot == "ye" or UserPilot == "yes":
+            UserPilot = "Yes"
+            exitLoop = True
+        elif UserPilot == "n" or UserPilot == "no":
+            UserPilot = "No"
+            exitLoop = True
+        else:
+            print("This field may only contain Yes or No.\n")
+    exitLoop = False
+    
+    EmployeeData[UserID] = {"Name":UserName, "Surname":UserSurname, "Address":UserAddress, "Phone":UserPhone, "Pilot":UserPilot} # Store the data
 
-                    i = 0
-                    while i < len(UserName):
-                        if UserName[i] < "a" or UserName[i] > "z": # I will be using this a lot. Check out the ascii table
-                            i = len(UserName) # Get out of the inner while loop. We avoided more variables ... yay                         
-                        i+=1 # Note, if the program only finds a-z, then i = UserName.len(), else i = UserName.len()+1
-                    if i == len(UserName): # Only if UserName contains a-z
-                        InputPromptExit = True
-                        UserName = UserName[0].upper() + UserName[1:]
-                    else:
-                        print("This field may only contain letters.\n") 
-                InputPromptExit = False # Don't forget to reset it afterwards, else it won't work a second time!
-            
-                UserSurname = ""
-                while not InputPromptExit:
-                    i = 0
-                    while i == 0:
-                        UserSurname = input("Enter your surname: ")
-                        if len(UserSurname) != 0:
-                            i = 1
-                        else:
-                            print("This field must include at least one letter.\n")
-                    UserSurname = UserSurname.lower() 
+    print("\nEmployee registered:")
+    print("Name:   ",     UserName)
+    print("Surname:",   UserSurname)
+    print("ID:     ",       UserID)
+    print("Address:",  UserAddress)
+    print("Phone:  ",    UserPhone)
+    print("Pilot:  ",    UserPilot) 
+    input("Press ENTER to continue.\n")
 
-                    i = 0 
-                    while i < len(UserSurname):
-                        if UserSurname[i] < "a" or UserSurname[i] > "z": 
-                            i = len(UserSurname) 
-                        i+=1 
-                    if i == len(UserSurname): 
-                        InputPromptExit = True
-                        UserSurname = UserSurname[0].upper() + UserSurname[1:]
-                    else:
-                        print("This field may only contain letters\n") 
-                InputPromptExit = False 
-                
-                UserID = ""
-                while not InputPromptExit:
-                    UserID = input("Enter your ID number: ")
-                    if UserID.isdigit() and len(UserID) == 8:
-                        InputPromptExit = True
-                    else:
-                        print("This field may only be an 8 digit number.\n")
-                InputPromptExit = False
-                UserID += DNILetter[int(UserID)%23]
+def employeeList():
+    print("Employee list:")
+    print("============================")
+    for DNI in EmployeeData:
+        print(DNI + " " + EmployeeData[DNI]["Name"] + " " + EmployeeData[DNI]["Surname"])
+    input("Press ENTER to continue.\n")
 
-                UserAddress = ""
-                while not InputPromptExit:
-                    UserAddress = input("Enter your address: ")
-                    if len(UserAddress) >= 3:
-                        InputPromptExit = True
-                    else:
-                        print("This field must have over 3 characters.\n")
-                InputPromptExit = False
-                
-                UserPhone = ""
-                while not InputPromptExit:
-                    UserPhone = input("Enter your phone number: ")
-                    if UserPhone.isdigit() and len(UserPhone) == 9:
-                        InputPromptExit = True
-                    else:
-                        print("This field may only be a 9 digit number.\n")
-                InputPromptExit = False
-
-                UserPilot = ""
-                while not InputPromptExit:
-                    UserPilot = input("Are you a pilot?(y/n): ")
-                    UserPilot = UserPilot.lower()
-                    if UserPilot == "y" or UserPilot == "ye" or UserPilot == "yes":
-                        UserPilot = "Yes"
-                        InputPromptExit = True
-                    elif UserPilot == "n" or UserPilot == "no":
-                        UserPilot = "No"
-                        InputPromptExit = True
-                    else:
-                        print("This field may only contain Yes or No.\n")
-                InputPromptExit = False
-                
-                EmployeeData[UserID] = {"Name":UserName, "Surname":UserSurname, "Address":UserAddress, "Phone":UserPhone, "Pilot":UserPilot} # Store the data
-
-                print("\nEmployee registered")
-                print("Name:   ",     UserName)
-                print("Surname:",   UserSurname)
-                print("ID:     ",       UserID)
-                print("Address:",  UserAddress)
-                print("Phone:  ",    UserPhone)
-                print("Pilot:  ",    UserPilot) 
-                input("Press ENTER to continue.")
-
-            elif val == "2": # EMPLOYEE LIST 
-                print("Employee list:")
-                print("============================")
-                for DNI in EmployeeData:
-                    print(DNI + " " + EmployeeData[DNI]["Name"] + " " + EmployeeData[DNI]["Surname"])
-                input("Press ENTER to continue.")
-
-
-            elif val == "3": # SEARCH EMPLOYEE BY ID
-                print("Search by employee ID:")
-                print("============================")
-                UserDNI = input("Enter ID to search: ");
-                if UserDNI in EmployeeData:
-                    print("The employee data with ID " + UserDNI + " are the following:")
-                    print("Name:    " + EmployeeData[DNI]["Name"])
-                    print("Surname: " + EmployeeData[DNI]["Surname"])
-                    print("Address: " + EmployeeData[DNI]["Address"])
-                    print("Phone:   " + EmployeeData[DNI]["Phone"])
-                    print("Pilot?:  " + EmployeeData[DNI]["Pilot"])
-                else:
-                    print("No employee exists with ID " + UserDNI)
-                input("Press ENTER to continue.")
-
-            elif val.lower() == "b":
-                print("Returning to the " + MainMenu + " from the " + EmployeeManagement + " Menu.")
-                EmployeeManagementExit = True
-
-            elif val.lower() == "f":
-                print(MenuFinish + EmployeeManagement)
-                print("End")
-                EmployeeManagementExit = True
-                MainMenuExit = True
-
-            else: 
-                print(InvalidOption + EmployeeManagement)
-
-    elif val == "2": # PARTS MANAGEMENT
-        print(OptionSelected + PartsManagement + ",") 
-        print(PartsManagementMenu)
-        while not PartsManagementExit:
-            val = input("Please, press an option (1-3, or B or F): ")
-
-            if   val == "1": # ADD PARTS
-                print(OptionSelected + AddParts + ",")
-
-            elif val == "2": # PARTS LIST
-                print(OptionSelected + PartsList + ",")
-
-            elif val == "3": # SEARCH BY PARTS GROUP
-                print(OptionSelected + SearchParts + ",")
-
-            elif val.lower() == "b":
-                print("Returning to the " + MainMenu + " from the " + PartsManagement + " Menu.")
-                PartsManagementExit = True
-
-            elif val.lower() == "f":
-                print(MenuFinish + PartsManagement)
-                print("End")
-                PartsManagementExit = True
-                MainMenuExit = True
-
-            else: 
-                print(InvalidOption + PartsManagement)
-
-    elif val == "3": # IMPROVEMENTS MANAGEMENT
-        print(OptionSelected + ImprovementsManagement + ",") 
-        print(ImprovementsManagementMenu)
-        while not ImprovementsManagementExit:
-            val = input("Please, press an option (1-2, or B or F): ") 
-
-            if   val == "1": # ASSIGN IMPROVEMENT TO DEVELOPMENT GROUP
-                print(OptionSelected + AssignImprovement + ",")
-
-            elif val == "2": # DELETE IMPROVEMENT
-                print(OptionSelected + DeleteImprovement + ",")
-
-            elif val.lower() == "b":
-                print("Returning to the " + MainMenu + " from the " + ImprovementsManagement + " Menu.")
-                ImprovementsManagementExit = True  
-
-            elif val.lower() == "f":
-                print(MenuFinish + ImprovementsManagement) 
-                print("End") 
-                ImprovementsManagementExit = True
-                MainMenuExit = True
-
-            else: 
-                print(InvalidOption + ImprovementsManagement)
-
-    elif val == "4": # RESOURCE MANAGEMENT
-        print(OptionSelected + ResourceManagement + ",") 
-        print(ResourceManagementMenu)
-        while not ResourceManagementExit:
-            val = input("Please, press an option (1-2, or B or F): ")
-
-            if   val == "1": # RESOURCES SPENT
-                print(OptionSelected + ResourcesSpent + ",")
-
-            elif val == "2": # REMAINING BUDGET
-                print(OptionSelected + RemainingBudget + ",")
-
-            elif val.lower() == "b":
-                print("Returning to the " + MainMenu + " from the " + ResourceManagement + " Menu.")
-                ResourceManagementExit = True 
-
-            elif val.lower() == "f": 
-                print(MenuFinish + ResourceManagement) 
-                print("End")
-                ResourceManagementExit = True
-                MainMenuExit = True
-
-            else: 
-                print(InvalidOption + ResourceManagement)
-
-    elif val.lower() == "f": # FINISH
-        print("You have selected to finish from the Main Menu\nEnd")
-        MainMenuExit = True
+def searchEmployee():
+    print("Search by employee ID:")
+    print("============================")
+    UserDNI = input("Enter ID to search: ");
+    if UserDNI in EmployeeData:
+        print("The employee data with ID " + UserDNI + " are the following:")
+        print("Name:    " + EmployeeData[UserDNI]["Name"])
+        print("Surname: " + EmployeeData[UserDNI]["Surname"])
+        print("Address: " + EmployeeData[UserDNI]["Address"])
+        print("Phone:   " + EmployeeData[UserDNI]["Phone"])
+        print("Pilot?:  " + EmployeeData[UserDNI]["Pilot"])
     else:
-        print("Error: invalid option in the Main Menu") 
+        print("No employee exists with ID " + UserDNI)
+    input("Press ENTER to continue.\n") 
 
-    # The only way to exit the loops are for these conditions to be True
-    # We must reset them afterwards
-    EmployeeManagementExit = False
-    PartsManagementExit = False
-    ImprovementsManagementExit = False
-    ResourceManagementExit = False
+def addParts():
+    print("Work in progress.\n")
+
+def partsList():
+    print("Work in progress.\n")
+
+def searchParts():
+    print("Work in progress.\n")
+
+def assignImprovement():
+    print("Work in progress.\n")
+
+def deleteImprovement():
+    print("Work in progress.\n")
+
+def resourcesSpent():
+    print("Work in progress.\n")
+
+def remainingBudget():
+    print("Work in progress.\n")
+
+def main():
+    
+    # Quick and dirty way to add non-uniform probability
+    randomBorderBuffer = ("@", "*", "*", "=", "=", "=", "█", "█", "█", "█")
+    borderStyle = randomBorderBuffer[random.randint(0, 9)]
+    
+    exitMain = False
+    exitInsideMenu = False
+    while not exitMain:
+        val = mainMenu(borderStyle)
+        if val == "1":
+            while not exitInsideMenu:
+                val = employeeManagementMenu(borderStyle)
+                if val == "1":
+                    addEmployee()
+                elif val == "2":
+                    employeeList()
+                elif val == "3":
+                    searchEmployee()
+                elif val == "b":
+                    exitInsideMenu = True
+                elif val == "f":
+                    exitInsideMenu = True
+                    exitMain = True
+        elif val == "2":
+            while not exitInsideMenu:
+                val = partsManagementMenu(borderStyle)
+                if val == "1":
+                    addParts()
+                elif val == "2":
+                    partsList()
+                elif val == "3":
+                    searchParts()
+                elif val == "b":
+                    exitInsideMenu = True
+                elif val == "f":
+                    exitInsideMenu = True 
+                    exitMain = True
+        elif val == "3":
+            while not exitInsideMenu:
+                val = improvementsManagementMenu(borderStyle)
+                if val == "1":
+                    assignImprovement()
+                elif val == "2":
+                    deleteImprovement()
+                elif val == "b":
+                    exitInsideMenu = True
+                elif val == "f":
+                    exitInsideMenu = True 
+                    exitMain = True
+        elif val == "4":
+            while not exitInsideMenu:
+                val = resourceManagementMenu(borderStyle)
+                if val == "1":
+                    resourcesSpent()
+                elif val == "2":
+                    remainingBudget()
+                elif val == "b":
+                    exitInsideMenu = True
+                elif val == "f":
+                    exitInsideMenu = True 
+                    exitMain = True
+        elif val == "f":
+            exitMain = True
+        exitInsideMenu = False
+    
+main()
