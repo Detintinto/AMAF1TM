@@ -267,58 +267,21 @@ def addParts():
     print("Work in progress.\n")
 
 def partsList():
-    size = 3
-    Reference = ["REF-908","LF-89","PD-SA"]
-    Name = ["Screw","Valve","Damping"]
-    Units = ["20","1","8"]
-    Confidence = ["98.98","50.3","97.4"]
-    Description = ["These are screws, duh","It used to work","Check it"]
     print("+---------------+---------------+---------------+---------------+---------------+")
     print("| Reference     | Name          | Units         | Confidence    | Description   |")
     print("+---------------+---------------+---------------+---------------+---------------+")
     
-    for i in range(size):
+    for row in parts:
         dataString = "| "
-        if len(Reference[i]) > 10:
-            dataString += Reference[i][0:10]
-            dataString += "..."
-        else:
-            dataString += Reference[i]
-            for k in range(13 - len(Reference[i])):
+        for k in range(5):
+            if len(row[k]) > 10:
+                dataString += row[k][0:10]
+                dataString += "..."
+            else:
+                dataString += row[k]
+            for k in range(13 - len(row[k])):
                 dataString += " "
-        dataString += " | "
-        if len(Name[i]) > 10:
-            dataString += Name[i][0:10]
-            dataString += "..."
-        else:
-            dataString += Name[i]
-            for k in range(13 - len(Name[i])):
-                dataString += " "
-        dataString += " | "
-        if len(Units[i]) > 10:
-            dataString += Units[i][0:10]
-            dataString += "..."
-        else:
-            dataString += Units[i]
-            for k in range(13 - len(Units[i])):
-                dataString += " "
-        dataString += " | "
-        if len(Confidence[i]) > 10:
-            dataString += Confidence[i][0:10]
-            dataString += "..."
-        else:
-            dataString += Confidence[i]
-            for k in range(13 - len(Confidence[i])):
-                dataString += " "
-        dataString += " | "
-        if len(Desc[i]) > 10:
-            dataString += Desc[i][0:10]
-            dataString += "..."
-        else:
-            dataString += Desc[i]
-            for k in range(13 - len(Desc[i])):
-                dataString += " "
-        dataString += " |"
+            dataString += " | "
         print(dataString)
     print("+---------------+---------------+---------------+---------------+---------------+")
     input("Press ENTER to continue.\n")
